@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 import normalize from 'normalize-mongoose';
 
 const propertySchema = new Schema({
@@ -10,8 +10,13 @@ const propertySchema = new Schema({
         type: String
     },
     location: {
-        city: { type: String, required: true },
-        country: { type: String, required: true }
+        city: { 
+            type: String, 
+            required: true 
+        },
+        country: {
+             type: String, 
+             required: true }
     },
     pricePerNight: {
         type: Number,
@@ -33,7 +38,7 @@ const propertySchema = new Schema({
         default: 0
     },
     host: {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'User',
         required: true
     }

@@ -1,18 +1,14 @@
 import { PropertyModel } from "../models/propertyModel.js";
 import { UserModel } from "../models/userModel.js";
+import { addPropertyValidator } from "../validators/property.js";
 
 // Add a new property
 export const addProperty = async (req, res, next) => {
     try {
-        const {
-            title,
-            description,
-            location,
-            pricePerNight,
-            photos,
-            amenities,
-            hostId
-        } = req.body;
+        const { error, value } = addPropertyValidator.validate({
+            ...req.body,
+            pictures: req.files?.map(file => file.filename)
+        });
 
         // Ensure host is a valid user with the 'host' role
         const host = await UserModel.findById(hostId);
@@ -21,17 +17,10 @@ export const addProperty = async (req, res, next) => {
         }
 
         // Create and save the new property
-        const newProperty = new PropertyModel({
-            title,
-            description,
-            location,
-            pricePerNight,
-            photos,
-            amenities,
+        const newProperty = await PropertyModel.create({
+            ...value,
             host: host._id
         });
-
-        await newProperty.save();
         res.status(201).json(newProperty);
     } catch (err) {
         next(err);
@@ -66,6 +55,12 @@ export const getProperties = async (req, res, next) => {
         next(error);
     }
 };
+
+//Get one property
+export const getProperty = async(req, res, next) => {
+    const property = await PropertyModel.findById(req.params.id)
+    res.status(200).json({"single property": property})
+}
 
 // Update a property by ID
 export const updateProperty = async (req, res, next) => {
