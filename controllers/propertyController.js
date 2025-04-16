@@ -10,6 +10,7 @@ export const addProperty = async (req, res, next) => {
             pictures: req.files?.map(file => file.filename)
         });
 
+        const hostId = req.user?.id || req.body.host;
         // Ensure host is a valid user with the 'host' role
         const host = await UserModel.findById(hostId);
         if (!host || host.role !== 'host') {

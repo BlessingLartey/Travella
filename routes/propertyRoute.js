@@ -22,7 +22,7 @@ propertyRouter.get(
 );
 
 propertyRouter.get(
-    '/products/:id',
+    '/property/:id',
     getProperty);
 
 propertyRouter.put(
@@ -30,7 +30,7 @@ propertyRouter.put(
 );
 
 propertyRouter.delete(
-    '/properties/:id', deleteProperty
+    '/property/:id', deleteProperty
 );
 
 export default propertyRouter;
