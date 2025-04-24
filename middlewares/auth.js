@@ -5,7 +5,7 @@ import { UserModel } from "../models/userModel.js";
 //The commented code below can be summerized to this 3 lines of code
 export const isAuthenticated = expressjwt({
     secret: process.env.JWT_SECRET_KEY,
-    algorithms: ['HS256']
+    algorithms: ['HS256'],
 });
 
 export const isAuthorized = (roles) => {
